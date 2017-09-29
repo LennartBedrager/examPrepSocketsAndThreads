@@ -18,6 +18,7 @@ public class TurnstileServer {
 
     private ServerSocket serverSocket;
     private static volatile int spectator = 0;
+    
 
     public static void main(String[] args) throws IOException {
         TurnstileServer server = new TurnstileServer();
@@ -68,31 +69,32 @@ public class TurnstileServer {
             Scanner scan = new Scanner(socket.getInputStream());
             PrintWriter pw = new PrintWriter(socket.getOutputStream(), true); //DONT FORGET AUTOFLUSH
             //IMPORTANT: BLOCKING
+            Turnstile turnstile = new Turnstile();
 
             String input;
             
             while (true) {
-                pw.println("Usage: Hello turnstile! Use add/show to increase or show specatators");
+                pw.println("Hello turnstile" + turnstile.getTurnstileID()+"! Use add/show to increase or show specatators");
                 input = scan.nextLine();
                 if (input.toLowerCase().equals("exit") || input.toLowerCase().equals("quit")) {
                     pw.println("Disconnected!");
                     break;
                 }
                 
-                pw.println(parseCommand(input));
+                pw.println(parseCommand(input, turnstile));
             }
 
         }
 
-        private static int parseCommand(String input) {
+        private static int parseCommand(String input, Turnstile turnstile) {
            
             
             switch (input.toUpperCase()) {
                 case "ADD":
-                    spectator ++;
-                    return spectator;
+                    turnstile.addSpecatator();
+                    return turnstile.getSpectators();
                 case "SHOW":
-                    return spectator;
+                    return turnstile.getSpectators();
                 
                 default:
                     break;
