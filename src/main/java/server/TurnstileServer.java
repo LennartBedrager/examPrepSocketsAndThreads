@@ -58,6 +58,7 @@ public class TurnstileServer {
                 in.close();
                 out.close();
                 clientSocket.close();
+                
             } catch (IOException ex) {
                 Logger.getLogger(TurnstileServer.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -69,9 +70,7 @@ public class TurnstileServer {
             //IMPORTANT: BLOCKING
 
             String input;
-            String[] split;
-            String cmd;
-            String msg;
+            
             while (true) {
                 pw.println("Usage: Hello turnstile! Use add to increase specatator");
                 input = scan.nextLine();
