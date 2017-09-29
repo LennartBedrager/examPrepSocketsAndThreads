@@ -17,7 +17,6 @@ import java.util.logging.Logger;
 public class TurnstileServer {
 
     private ServerSocket serverSocket;
-    private static volatile int spectator = 0;
     
 
     public static void main(String[] args) throws IOException {
