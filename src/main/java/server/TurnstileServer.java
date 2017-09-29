@@ -69,10 +69,35 @@ public class TurnstileServer {
             Scanner scan = new Scanner(socket.getInputStream());
             PrintWriter pw = new PrintWriter(socket.getOutputStream(), true); //DONT FORGET AUTOFLUSH
             //IMPORTANT: BLOCKING
+            Boolean isTurnstile = false;
+            
+            while(true){
+            pw.println("Are you a turnstile? (y/n)");
+            String input = scan.nextLine();
+            
+            if(input.equalsIgnoreCase("n")){
+                
+                pw.println("Hello monitor!");
+                pw.println("Use show to see numbers of specatators.");
+                
+                while (true) {
+                
+                input = scan.nextLine();
+                if (input.toLowerCase().equals("exit") || input.toLowerCase().equals("quit")) {
+                    pw.println("Disconnected!");
+                    break;
+                }
+                
+                pw.println(parseCommandMonitor(input));
+            }
+                
+            }
+            
+            
+            
+            if(input.equalsIgnoreCase("y")){
             Turnstile turnstile = new Turnstile();
 
-            String input;
-            
                 pw.println("Hello turnstile" + turnstile.getTurnstileID()+"!");
                 pw.println("Use add/show to increase or show specatators.");
                 pw.println("Use addnumber to show specatators you have added.");
@@ -85,12 +110,13 @@ public class TurnstileServer {
                     break;
                 }
                 
-                pw.println(parseCommand(input, turnstile));
+                pw.println(parseCommandTurnstile(input, turnstile));
+            }
             }
 
-        }
+        }}
 
-        private static int parseCommand(String input, Turnstile turnstile) {
+        private static int parseCommandTurnstile(String input, Turnstile turnstile) {
            
             
             switch (input.toUpperCase()) {
@@ -101,6 +127,19 @@ public class TurnstileServer {
                     return turnstile.getSpectators();
                 case "ADDNUMBER":
                     return turnstile.getMadeSpectators();
+                
+                default:
+                    break;
+            }
+            return 0;
+        }
+        private static int parseCommandMonitor(String input) {
+           
+            
+            switch (input.toUpperCase()) {
+               
+                case "SHOW":
+                    return Turnstile.getSpectators();
                 
                 default:
                     break;
