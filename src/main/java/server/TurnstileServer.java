@@ -73,8 +73,12 @@ public class TurnstileServer {
 
             String input;
             
+                pw.println("Hello turnstile" + turnstile.getTurnstileID()+"!");
+                pw.println("Use add/show to increase or show specatators.");
+                pw.println("Use addnumber to show specatators you have added.");
+            
             while (true) {
-                pw.println("Hello turnstile" + turnstile.getTurnstileID()+"! Use add/show to increase or show specatators");
+                
                 input = scan.nextLine();
                 if (input.toLowerCase().equals("exit") || input.toLowerCase().equals("quit")) {
                     pw.println("Disconnected!");
@@ -95,6 +99,8 @@ public class TurnstileServer {
                     return turnstile.getSpectators();
                 case "SHOW":
                     return turnstile.getSpectators();
+                case "ADDNUMBER":
+                    return turnstile.getMadeSpectators();
                 
                 default:
                     break;
