@@ -72,7 +72,7 @@ public class TurnstileServer {
             String input;
             
             while (true) {
-                pw.println("Usage: Hello turnstile! Use add to increase specatator");
+                pw.println("Usage: Hello turnstile! Use add/show to increase or show specatators");
                 input = scan.nextLine();
                 if (input.toLowerCase().equals("exit") || input.toLowerCase().equals("quit")) {
                     pw.println("Disconnected!");
@@ -90,6 +90,8 @@ public class TurnstileServer {
             switch (input.toUpperCase()) {
                 case "ADD":
                     spectator ++;
+                    return spectator;
+                case "SHOW":
                     return spectator;
                 
                 default:
